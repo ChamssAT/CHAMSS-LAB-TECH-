@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Technicien Électronique & informatique</title>
+    <style>
+        /* ====== RESET & BASE ====== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #151922;
+            --accent: #00d9ff;
+            --accent-dim: #00a8cc;
+            --text-primary: #e6edf3;
+            --text-secondary: #8b949e;
+            --border: #30363d;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ====== NAVIGATION ====== */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 14, 23, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            padding: 1.2rem;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* ====== SECTIONS COMMUNES ====== */
+        section {
+            min-height: 100vh;
+            padding: 6rem 2rem 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s, transform 0.8s;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: var(--accent);
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+            margin: 1rem auto 0;
+        }
+
+        /* ====== ACCUEIL ====== */
+        #accueil {
+            background: linear-gradient(135deg, var(--bg-primary) 0%, #0d1520 100%);
+        }
+
+        .hero-content {
+            text-align: center;
+        }
+
+        .typing-text {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            min-height: 2rem;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.3rem;
+            background: var(--accent);
+            margin-left: 3px;
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .cta-button {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 1rem 2.5rem;
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent);
+            transition: left 0.3s;
+            z-index: -1;
+        }
+
+        .cta-button:hover {
+            color: var(--bg-primary);
+        }
+
+        .cta-button:hover::before {
+            left: 0;
+        }
+
+        /* ====== À PROPOS ====== */
+        #apropos {
+            background: var(--bg-secondary);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .about-highlight {
+            background: var(--bg-primary);
+            padding: 2rem;
+            border-left: 4px solid var(--accent);
+            margin-top: 2rem;
+        }
+
+        .about-highlight h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .about-highlight ul {
+            list-style: none;
+        }
+
+        .about-highlight li {
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+        }
+
+        .about-highlight li::before {
+            content: '▹';
+            color: var(--accent);
+            margin-right: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* ====== COMPÉTENCES ====== */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-card {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .skill-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .skill-card:hover::before {
+            width: 100%;
+        }
+
+        .skill-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .skill-card h3 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .skill-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .skill-tags {
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background: var(--bg-primary);
+            padding: 0.3rem 0.8rem;
+            font-size: 0.85rem;
+            color: var(--accent);
+            border: 1px solid var(--border);
+        }
+
+        /* ====== PROJETS ====== */
+        #projets {
+            background: var(--bg-secondary);
+        }
+
+        .projects-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--bg-primary);
+            padding: 2rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .project-card:hover {
+            border-color: var(--accent);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .project-card h3 {
+            color: var(--accent);
+            font-size: 1.5rem;
+        }
+
+        .project-type {
+            background: var(--accent);
+            color: var(--bg-primary);
+            padding: 0.3rem 0.8rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .project-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .project-tech {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        /* ====== CONTACT ====== */
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .contact-intro {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-secondary);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        input, textarea {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 1rem;
+            color: var(--text-primary);
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        button[type="submit"] {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            padding: 1rem 2rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        button[type="submit"]:hover {
+            background: var(--accent);
+            color: var(--bg-primary);
+        }
+
+        .contact-methods {
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .contact-methods p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .email-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        .email-link:hover {
+            color: var(--text-primary);
+        }
+
+        /* ====== FOOTER ====== */
+        footer {
+            background: var(--bg-primary);
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        footer p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .footer-tech {
+            margin-top: 0.5rem;
+            color: var(--accent);
+            font-size: 0.85rem;
+        }
+
+        /* ====== RESPONSIVE ====== */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 5rem 1.5rem 3rem;
+            }
+        }
+
+        /* ====== SCROLL INDICATOR ====== */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--accent);
+            width: 0%;
+            z-index: 1001;
+            transition: width 0.1s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Indicateur de scroll -->
+    <div class="scroll-indicator" id="scrollIndicator"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#accueil">Accueil</a></li>
+            <li><a href="#apropos">À propos</a></li>
+            <li><a href="#competences">Compétences</a></li>
+            <li><a href="#projets">Projets</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Section Accueil -->
+    <section id="accueil">
+        <div class="container hero-content">
+            <h1>Technicien Électronique & informatique</h1>
+            <div class="typing-text" id="typingText"></div>
+            <p style="color: var(--text-secondary); max-width: 700px; margin: 0 auto;">
+                Spécialisé dans la  maintenance informatique  électronique.
+            </p>
+            <a href="#contact" class="cta-button">Me contacter</a>
+        </div>
+    </section>
+
+    <!-- Section À propos -->
+    <section id="apropos">
+        <div class="container">
+            <h2>À propos</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>
+                        Technicien autodidacte passionné par la compréhension profonde des systèmes électroniques et informatiques. Mon approche est basée sur la rigueur, le diagnostic méthodique et la recherche de solutions durables.
+                    </p>
+                    <p>
+                     <!--   De la réparation de cartes électroniques à la programmation embarquée, j'interviens sur des systèmes réels avec une attention particulière portée à la sécurité, à la fiabilité et à la documentation technique.-->
+                    </p>
+                    <p>
+                        Ma curiosité scientifique me pousse à explorer les domaines de l'astronomie, des mathématiques appliquées et de la cybersécurité, enrichissant ainsi ma vision globale des technologies.
+                    </p>
+                </div>
+                <div>
+                    <div class="about-highlight">
+                        <h3>Approche professionnelle</h3>
+                        <ul>
+                            <li>Diagnostic systématique et méthodique</li>
+                            <li>Documentation rigoureuse des interventions</li>
+                            <li>Veille technologique constante</li>
+                            <li>Maîtrise des fondamentaux électroniques</li>
+                            <li>Vision long terme sur la sécurité</li>
+                            <li>Apprentissage continu et autodidaxie</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Compétences -->
+    <section id="competences">
+        <div class="container">
+            <h2>Compétences Techniques</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">⚡</div>
+                    <h3>Électronique & Dépannage</h3>
+                    <p>
+                        Diagnostic et réparation de cartes électroniques, identification de composants défectueux, analyse de court-circuits, maintenance préventive et corrective de systèmes électroniques.
+                    </p>
+                    <div class="skill-tags">
+                        <span class="tag">Diagnostic</span>
+                        <span class="tag">Court-circuits</span>
+                        <span class="tag">Composants</span>
+                        <span class="tag">Soudure</span>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">💻</div>
+                    <h3>Informatique & Systèmes</h3>
+                    <p>
+                        Maintenance informatique, installation et configuration de systèmes, résolution de pannes matérielles et logicielles.
+                    </p>
+                    <div class="skill-tags">
+                        <span class="tag">Maintenance</span>
+                        <span class="tag">Systèmes</span>
+                        <span class="tag">Réseaux</span>
+                        <span class="tag">Hardware</span>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">🔧</div>
+                    <h3>Programmation Embarquée</h3>
+                    <p>
+                        Développement sur microcontrôleurs Arduino, programmation en C,
+                    </p>
+                    <div class="skill-tags">
+                        <span class="tag">Arduino</span>
+                        <span class="tag">C</span>
+                        <span class="tag">Capteurs</span>
+                        <span class="tag">Protocoles</span>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">🛡️</div>
+                    <h3>Cybersécurité</h3>
+                    <p>
+                        Fondamentaux de la sécurité informatique, sécurité matérielle et logicielle, analyse de vulnérabilités, bonnes pratiques de protection des systèmes et vision long terme sur la sécurité.
+                    </p>
+                    <div class="skill-tags">
+                        <span class="tag">Sécurité matérielle</span>
+                        <span class="tag">Analyse</span>
+                        <span class="tag">Protection</span>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">📊</div>
+                    <h3>Méthodologie & Analyse</h3>
+                    <p>
+                        Approche scientifique du diagnostic, documentation technique précise, analyse logique des problèmes, tests systématiques et validation des solutions implémentées.
+                    </p>
+                    <div class="skill-tags">
+                        <span class="tag">Diagnostic</span>
+                        <span class="tag">Documentation</span>
+                        <span class="tag">Tests</span>
+                        <span class="tag">Rigueur</span>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">🔬</div>
+                   <!-- <h3>Science & Mathématiques</h3>-->
+                 <!--   <p>
+                        Application des mathématiques à l'informatique, logique algorithmique, passion pour l'astronomie et les sciences.
+                    </p>
+                    <div class="skill-tags">
+                        <span class="tag">Algorithmes</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">Logique</span>
+                        <span class="tag">Astronomie</span>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Projets -->
+    <section id="projets">
+        <div class="container">
+            <h2>Réalisations & Projets</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Réparation de Carte Mère Ordinateur</h3>
+                        <span class="project-type">Électronique</span>
+                    </div>
+                    <p>
+                       Diagnostic et réparation d'une carte mère présentant un court-circuit .
+                    </p>
+                    <div class="project-tech">
+                        <span class="tag">Diagnostic</span>
+                        <span class="tag">Court-circuit</span>
+                        <span class="tag">Soudure CMS</span>
+                        <span class="tag">Multimètre</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Système de Surveillance Environnementale</h3>
+                      <!-  <span class="project-type"></span>
+                    </div>
+                    <p>
+                      <!--  Conception d'un système autonome de mesure de température, humidité et pression atmosphérique avec stockage des données sur carte SD. Programmation en C, interfaçage de capteurs numériques via I2C et affichage des données en temps réel sur écran LCD.-->
+                    </p>
+                  <!--  <div class="project-tech">
+                        <span class="tag">Arduino</span>
+                        <span class="tag">C</span>
+                        <span class="tag">I2C</span>
+                        <span class="tag">Capteurs</span>
+                        <span class="tag">SD Card</span>
+                    </div>-->
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Analyse de Panne Alimentation Switching</h3>
+                        <span class="project-type">Diagnostic</span>
+                    </div>
+                    <p>
+                        Intervention sur une alimentation à découpage défaillante. Analyse méthodique du circuit de puissance.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tag">Électronique de puissance</span>
+                        <span class="tag">Oscilloscope</span>
+                        <span class="tag">Diagnostic</span>
+                        <span class="tag">Réparation</span>
+                    </div>
+                </div>
+                
+                
+                <div class="project-card">
+                <div class="project-header">
+                <h3>Alimentation à decoupage12V 24V 5V</h3>
+                <span class="project-type">Diagnostic</span>
+                </div>
+                <p>
+                Conception alimentation à découpage 12V,24V5V stable
+                </p>
+                <div class="project-tech">
+                <span class="tag">Électronique de puissance</span>
+                <span class="tag">Oscilloscope</span>
+                <span class="tag">Diagnostic</span>
+                <span class="tag">Réparation</span>
+                </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Laboratoire de Cybersécurité Personnel</h3>
+                        <span class="project-type">Sécurité</span>
+                    </div>
+                    <p>
+                       <!-- Mise en place d'un environnement d'apprentissage pour la cybersécurité avec machines virtuelles isolées. Étude des fondamentaux de la sécurité réseau, analyse de protocoles, tests de sécurité dans un cadre contrôlé et documentation des vulnérabilités courantes.-->
+                    </p>
+                    <div class="project-tech">
+                        <span class="tag">Virtualisation</span>
+                        <span class="tag">Réseaux</span>
+                        <span class="tag">Sécurité</span>
+                        <span class="tag">Analyse</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Contact -->
+    <section id="contact">
+        <div class="container">
+            <h2>Contact</h2>
+            <div class="contact-content">
+                <div class="contact-intro">
+                    <p>
+                        Disponible pour des missions de maintenance électronique, interventions de dépannage .
+                    </p>
+                </div>
+                
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Nom</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    
+                    <button type="submit">Envoyer le message</button>
+                </form>
+
+                <div class="contact-methods">
+                    <p>Ou contactez-moi directement par email :</p>
+                    <a href="mailto:Chamssoudineattideka0@gmail.com" class="email-link">chamssoudineattideka0@gmail.com <br> +227 89841476 <br> +227 94824322</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Portfolio Technique. Tous droits réservés.</p>
+        <p class="footer-tech">Site développé Par Chamss-lab-Technologie</p>
+    </footer>
+
+    <script>
+        // ====== EFFET DE FRAPPE (TYPING) ======
+        const typingText = document.getElementById('typingText');
+        const phrases = [
+            'Maintenance informatique et electronique',
+            
+            'Cybersecurité'
+        ];
+        
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        
+        function typeEffect() {
+            const currentPhrase = phrases[phraseIndex];
+            
+            if (isDeleting) {
+                typingText.innerHTML = currentPhrase.substring(0, charIndex - 1) + '<span class="cursor"></span>';
+                charIndex--;
+            } else {
+                typingText.innerHTML = currentPhrase.substring(0, charIndex + 1) + '<span class="cursor"></span>';
+                charIndex++;
+            }
+            
+            let typeSpeed = isDeleting ? 50 : 100;
+            
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                typeSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                typeSpeed = 500;
+            }
+            
+            setTimeout(typeEffect, typeSpeed);
+        }
+        
+        // Démarrer l'effet de frappe
+        typeEffect();
+        
+        // ====== NAVIGATION SMOOTH SCROLL ======
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+        
+        // ====== INDICATEUR DE SCROLL ======
+        function updateScrollIndicator() {
+            const scrollIndicator = document.getElementById('scrollIndicator');
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollPercent = (scrollTop / (documentHeight - windowHeight)) * 100;
+            scrollIndicator.style.width = scrollPercent + '%';
+        }
+        
+        window.addEventListener('scroll', updateScrollIndicator);
+        
+        // ====== APPARITION DES SECTIONS AU SCROLL ======
+        const sections = document.querySelectorAll('section');
+        
+        function checkSectionVisibility() {
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (sectionTop < windowHeight * 0.75) {
+                    section.classList.add('visible');
+                }
+            });
+        }
+        
+        // Vérifier la visibilité au chargement et au scroll
+        window.addEventListener('scroll', checkSectionVisibility);
+        window.addEventListener('load', checkSectionVisibility);
+        
+        // ====== GESTION DU FORMULAIRE ======
+        const contactForm = document.getElementById('contactForm');
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Récupération des valeurs
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            // Simulation d'envoi (en production, utiliser un service backend)
+            // Alternative: création d'un lien mailto avec les données
+            const mailtoLink = `mailto:contact@votreemail.com?subject=Contact de ${encodeURIComponent(name)}&body=${encodeURIComponent(message)}%0D%0A%0D%0AEmail de contact: ${encodeURIComponent(email)}`;
+            
+            // Confirmation à l'utilisateur
+            alert('Merci pour votre message ! Votre client email va s\'ouvrir pour finaliser l\'envoi.');
+            
+            // Ouvrir le client email
+            window.location.href = mailtoLink;
+            
+            // Réinitialiser le formulaire
+            contactForm.reset();
+        });
+        
+        // ====== ANIMATION DES CARTES AU SURVOL ======
+        const skillCards = document.querySelectorAll('.skill-card');
+        const projectCards = document.querySelectorAll('.project-card');
+        
+        // Ajouter un effet de parallaxe léger sur les cartes
+        function addCardHoverEffect(cards) {
+            cards.forEach(card => {
+                card.addEventListener('mousemove', function(e) {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateX = (y - centerY) / 20;
+                    const rotateY = (centerX - x) / 20;
+                    
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+                });
+            });
+        }
+        
+        addCardHoverEffect(skillCards);
+        addCardHoverEffect(projectCards);
+    </script>
+</body>
+</html>
